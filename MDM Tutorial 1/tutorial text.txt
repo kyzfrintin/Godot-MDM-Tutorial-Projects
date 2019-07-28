@@ -1,0 +1,43 @@
+1 - basics
+    - getting mixing desk
+    - importing audio for use
+    - setting up a simple looping song
+    - explain node properties (bpm, bars, time sig)
+    - touch on random tracks
+
+YT link: https://youtu.be/Zgs6mMF4rT4
+------
+
+This tutorial will cover the very simplest functions and applications of the Godot Mixing Desk for music.
+
+We will explore the steps necessary to simply get the MDM set up and working inside of a Godot project, as well as how to get a song playing. Some of the easier interactive components will be touched on, too.
+
+Firstly, you'll have to download the Mixing Desk into your project. You can do this either through the asset library, or directly from GitHub here: https://github.com/kyzfrintin/Godot-Mixing-Desk
+
+If you're downloading from GitHub, throw the 'addons' folder directly into the top level of your project, under 'res://'. Once it's in, check under project settings to see if the GMD is enabled, and enable it if not.
+
+Now Mixing Desk is enabled, you can add an MDM node directly into your project. The node itself has one exported property, 'play mode'. By default it is set to 1, which is loop. 0 is play once, and 2 is shuffle. Loop will work just fine for now. Now, directly under the MDM, add a "Song" node. Name it 'test' - this will be the name you use to refer to the song in code, if you don't want to use its index number (either will do).
+
+I have uploaded a small zip file of demo music for use in this tutorial. You can find it here: https://www.sendspace.com/file/703z5r
+
+Import these files and - this may seem odd - disable the loop property in the import menu.
+
+The song properties for this particular music are:
+
+Tempo - 120bpm
+Bars - 4
+Beats in bar - 4
+
+These first three properties are absolutely vital to make sure the song not only loops properly, but also to ensure that beat and bar signals are sent on time. This will come in useful later, when we want to transition between songs by beat and/or bar.
+
+Set random chance to 1 for a little demo later - this is simply the percentage chance of a random track playing, with 1 of course meaning a random track will always play. And transition beats is irrelevant for this tutorial. Definitely enable loop, though!
+
+MDM works by scanning the nodes for types of 'containers' - this is a feature shamelessly lifted straight from Wwise. Depending on the containers you use, MDM will play the files in different ways. For ordinary use - that is, playing all listed audio tracks at once - a CoreContainer is what we need. So place a CoreContainer under the Song node, and last but certainly not least, a regular old AudioStreamPlayer beneath that. We only need one core track for this demo. Load in the epiano.ogg track, and MDM is ready to be activated.
+
+The final step is to program the MDM to load and play the song 'test'. If you haven't already, create a script for your main scene node. This will work in either GDScript or VisualScript, so don't feel threatened by the need to code if you don't know GDScript. All we'll need to do in the script is refer to the MDM, and call the init_song() function. Pass through the string 'test' or the number '0', and follow it up with an identical call to the play() function - again, pass through either 'test' or '0'. This may seem fiddly, due to there being 2 function calls. It is this way simply because, sometimes, you may want to load the song before you play it.
+
+But now - viola! Test your scene, and the epiano track is now playing and looping. 'So what?' You might ask, 'I can loop an audio file with an AudioStreamPlayer alone!' Aha - but can you do this?
+
+Beneath your 'test' song node, add a RandomContainer. Throw in three AudioStreamPlayers beneath the container, and load the ranperc audio files into each respectively. And now, with no extra programming required, launch your scene again. On each playthrough, the MDM will pick a clip from the container at random to play alongside the core tracks, or track in this case.
+
+So, there you have it! Setting up the basics of the Mixing Desk for Music. We have a single looping track, with a few random overlays to play above it. You can have any number of core tracks under a core container, and they will all automatically play together. You can also have any number of random tracks, under any number of random containers, and each random container will be treated separately, so you can have a random container for percussion, one for melodies, and so on.
