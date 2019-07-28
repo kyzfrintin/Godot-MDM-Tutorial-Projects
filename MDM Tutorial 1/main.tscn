@@ -1,0 +1,88 @@
+[gd_scene load_steps=12 format=2]
+
+[ext_resource path="res://addons/mixing-desk/music/mdm_icon.png" type="Texture" id=2]
+[ext_resource path="res://addons/mixing-desk/music/song_icon.png" type="Texture" id=3]
+[ext_resource path="res://addons/mixing-desk/music/song.gd" type="Script" id=4]
+[ext_resource path="res://addons/mixing-desk/music/containers/ran_cont.gd" type="Script" id=5]
+[ext_resource path="res://addons/mixing-desk/music/containers/core_cont.gd" type="Script" id=6]
+[ext_resource path="res://addons/mixing-desk/music/mixing_desk_music.gd" type="Script" id=7]
+[ext_resource path="res://audio/music/song1/ranperc_Bonk_2.ogg" type="AudioStream" id=8]
+[ext_resource path="res://audio/music/song1/ranperc_Bonk_1.ogg" type="AudioStream" id=9]
+[ext_resource path="res://audio/music/song1/ranperc_Clicks.ogg" type="AudioStream" id=10]
+[ext_resource path="res://main.gd" type="Script" id=11]
+[ext_resource path="res://audio/music/song1/epiano.ogg" type="AudioStream" id=12]
+
+[node name="Node2D" type="Node2D"]
+script = ExtResource( 11 )
+
+[node name="MixingDeskMusic" type="Node" parent="."]
+script = ExtResource( 7 )
+__meta__ = {
+"_editor_icon": ExtResource( 2 )
+}
+
+[node name="test" type="Node" parent="MixingDeskMusic"]
+script = ExtResource( 4 )
+__meta__ = {
+"_editor_icon": ExtResource( 3 )
+}
+tempo = 120
+bars = 4
+beats_in_bar = 4
+random_chance = 1.0
+transition_beats = 2.0
+loop = true
+
+[node name="CoreContainer" type="Node" parent="MixingDeskMusic/test"]
+script = ExtResource( 6 )
+__meta__ = {
+"_editor_icon": ExtResource( 3 )
+}
+
+[node name="epiano" type="AudioStreamPlayer" parent="MixingDeskMusic/test/CoreContainer"]
+stream = ExtResource( 12 )
+
+[node name="RandomContainer" type="Node" parent="MixingDeskMusic/test"]
+script = ExtResource( 5 )
+__meta__ = {
+"_editor_icon": ExtResource( 3 )
+}
+
+[node name="ranperc" type="AudioStreamPlayer" parent="MixingDeskMusic/test/RandomContainer"]
+stream = ExtResource( 9 )
+
+[node name="ranperc2" type="AudioStreamPlayer" parent="MixingDeskMusic/test/RandomContainer"]
+stream = ExtResource( 8 )
+
+[node name="ranperc3" type="AudioStreamPlayer" parent="MixingDeskMusic/test/RandomContainer"]
+stream = ExtResource( 10 )
+
+[node name="RandomContainer2" type="Node" parent="MixingDeskMusic/test"]
+script = ExtResource( 5 )
+__meta__ = {
+"_editor_icon": ExtResource( 3 )
+}
+
+[node name="ranperc" type="AudioStreamPlayer" parent="MixingDeskMusic/test/RandomContainer2"]
+stream = ExtResource( 9 )
+
+[node name="ranperc2" type="AudioStreamPlayer" parent="MixingDeskMusic/test/RandomContainer2"]
+stream = ExtResource( 8 )
+
+[node name="ranperc3" type="AudioStreamPlayer" parent="MixingDeskMusic/test/RandomContainer2"]
+stream = ExtResource( 10 )
+
+[node name="RandomContainer3" type="Node" parent="MixingDeskMusic/test"]
+script = ExtResource( 5 )
+__meta__ = {
+"_editor_icon": ExtResource( 3 )
+}
+
+[node name="ranperc" type="AudioStreamPlayer" parent="MixingDeskMusic/test/RandomContainer3"]
+stream = ExtResource( 9 )
+
+[node name="ranperc2" type="AudioStreamPlayer" parent="MixingDeskMusic/test/RandomContainer3"]
+stream = ExtResource( 8 )
+
+[node name="ranperc3" type="AudioStreamPlayer" parent="MixingDeskMusic/test/RandomContainer3"]
+stream = ExtResource( 10 )

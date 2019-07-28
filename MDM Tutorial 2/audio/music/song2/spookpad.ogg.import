@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/spookpad.ogg-836cbbf2ecb6328843f5851a43408f8e.oggstr"
+
+[deps]
+
+source_file="res://audio/music/song2/spookpad.ogg"
+dest_files=[ "res://.import/spookpad.ogg-836cbbf2ecb6328843f5851a43408f8e.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/epiano.ogg-748c980b0cefc80089c79d6f6e88442a.oggstr"
+
+[deps]
+
+source_file="res://audio/music/song1/epiano.ogg"
+dest_files=[ "res://.import/epiano.ogg-748c980b0cefc80089c79d6f6e88442a.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

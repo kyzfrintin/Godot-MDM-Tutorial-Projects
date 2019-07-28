@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/ranperc_Bonk_2.ogg-c4ade22a03531826b23357a9ec63ad3c.oggstr"
+
+[deps]
+
+source_file="res://audio/music/song1/ranperc_Bonk_2.ogg"
+dest_files=[ "res://.import/ranperc_Bonk_2.ogg-c4ade22a03531826b23357a9ec63ad3c.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0
