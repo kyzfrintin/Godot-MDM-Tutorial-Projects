@@ -1,0 +1,48 @@
+3 - advanced features
+    - track param binds
+    - random/concat tracks for proc
+    - rollovers
+    - multiple MDM instances
+    - using beats/bars in-game
+
+YT link: https://youtu.be/a5eJy-092e0
+---
+
+In this tutorial, we'll be looking at the most advanced features of Mixing Desk. These are the parameter binds, procedural/randomised music, rollovers, MDM signalling and communication and connecting the MDM to the game to use beat and bar signals. We'll start with parameter binds, because it's probably the most complex feature, and it'll be good to get it out of the way.
+
+Firstly, you need a parameter to bind to - this can be just about anything. Distance between the player sprite and an enemy sprite, height of your character, amount of resources - anything that can have a numerical value attached, and has a fixed range between a minimum and a determined maximum. For this example, I'm going to use the height of the mouse cursor - the minimum in this case will be 0, and the maximum will be 600. To get things moving, I'll simply have to call the bind_to_param() function, pass in a track reference, and an initial value. I want to affect the epiano track, so I pass in "epiano1" for this value, and I'll also initialise it at 0.
+
+The volume value has to be normalised between 0 and 1 - 1 being full volume, and 0 being silent. To do this, you'll just have to divide the value by the maximum possible value. If the minimum is 0, leave it at that, but if the minimum is any higher, you'll also need to add this minimum to the value before dividing by max. For example:
+
+If the range of values is 0 - 100, the equation is `value / 100`.
+If the range is 50 - 100, the equation is `(value + 50) / 100`.
+
+This value needs to be fed to the mixing desk in _process, or whenever the value is updated, using the feed_param function. Pass in the bind reference number, which, for your first bind, will be 0, and the normalised value. The parameter binds are listed in order of initialisation, so the first will always be 0, second 1, and so on. In this case, it's the first bind, so the function call in process goes feed_param(0, vol) - this is, of course, after the simple equation of getting the mouse value and dividing it by the max.
+
+A further note - if you want the minimum value to be full volume, and the maximum value to be the minimum volume, you'll need to invert the value before normalising it. To do this, first multiply the value by -1, then add the max back to it. For instance, you might want to do this to fade in a tense underscore when getting close to an enemy. The equation would be as follows:
+
+`vol = ((distance * -1) + max_distance) / max_distance`
+
+Now let's look at random tracks more in depth. As was touched on in the first tutorial, you can have as many random containers as you like for any song. But what was not explained is how you can easily use this to have a song completely randomly generated. To do this, you can create your CoreContainer and fill it with only silence, the length of your song. Then add in the random containers, and seed them with all your potential tracks.
+
+Concat tracks are like random tracks, but are shorter and played in succession during the song's playtime. This is great for procedural generation of percussion, melody, and any other aspects of your song, by beat or measure or anything in between or besides. To use them, you need only fill up a concat container with short clips to be shuffled between. Note that they must be, at the very least, shorter than the song, but ideally less than half as long. They must also be at exact beat values for the rhythm to be consistent. You can fill it with percussion/melody loops at 2 beats, 3 beats, or any other beat value.
+
+Sequence tracks are, again, somewhat like random tracks. The difference is, they're played in the order that they're placed in the scene tree, from top to bottom, with each sequential loop of the song. Item 1 will be played first, item 2 second, and so on. This can save on memory - if you have a song that's 3 minutes long, but the backing is a 4 bar loop, with a soloist over the top, you can simply loop the 4 bar loop, and chop up the solo to be played sequentially over the top of it. Or, hell, even randomise it - but the option is there.
+
+Rollovers are short transitional clips that can ease the jolt of looping. A cymbal roll, white noise ramp, snare rush - any build-up/roll-off clip that can bridge the gap between the end and start of your loop. Like concats, they should ideally be at least less than half the length of your song, preferably shorter. All you need do is identify the beat for crossover (counting from 0), and add it as the `crossover_beat` in the rollover node's properties. If you want more than one potential rollover clip, to be randomised between, ensure that all of the clips have the same crossover beat.
+
+You can, of course, have multiple instances of MDM in your game. You can have them interact using signals and connections - perhaps one instance is for shuffling between a set of songs, while the other is for one shot segments, or situational loops. Because, after all, you don't want to shuffle in a group of songs that contains transitional segments. A one-shot, such as a victory fanfare, playing between ambient loops, could be extremely jarring, and thus you need each instance of MDM to only contain the grouping of tracks that is appropriate for its play mode.
+
+MDM emits 5 signals situationally:
+
+`beat [beat_number]`
+`bar [bar_number]`
+`song_changed [new_song]`
+`end`
+`shuffle`
+
+These signals can be connected into your game for use in many ways. One way is to update certain values per beat or bar - or trigger, defer, or manipulate actions based on the value of beat, bar and song - which we'll get to later. Another way this can be used is to communicate between instances of MDM. Perhaps you have one-shots in MDM1, while MDM2 is full of shuffle tracks. MDM2 will likely be playing most of the time, with MDM1 only needing to play once in a while. To switch between MDM instances by the bar, insert in your game's code a yield($MDM, "bar"), followed by a stop() call on MDM2, and a quickplay() call on MDM1, after the triggering event, which could be a victory, a loss, or any number of things. Then, on MDM1's end signal, you can easily tell MDM2 to continue playing.
+
+As briefly mentioned earlier, the beat and bar signals can be useful in their own right, without being related to musical transitions. For some nice game detail, showing off musicality, you can trigger animations, light changes, or any number of things with these signals. As an example, here is the musical beat making the Godot icon dance, and the bar changing its colour. As you can see in the code, it is just a case of connecting the signal, and programming the desired effect in the function.
+
+This concludes the advanced MDM tutorial, and the planned tutorial series. If you have any questions at all about the Mixing Desk, feel free to email me at kyz1610@gmail.com, or message me on Discord at Irmoz#8586

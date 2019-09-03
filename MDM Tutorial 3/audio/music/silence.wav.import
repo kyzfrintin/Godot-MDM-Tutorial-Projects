@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/silence.wav-380247221f30adf69c56fe5317cac47e.sample"
+
+[deps]
+
+source_file="res://audio/music/silence.wav"
+dest_files=[ "res://.import/silence.wav-380247221f30adf69c56fe5317cac47e.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0
